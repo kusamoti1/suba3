@@ -55,7 +55,11 @@ h1 {
   justify-content: center;
   gap: 10px;
   margin-bottom: 1rem;
-  font-size: 2rem;
+}
+
+.item {
+  font-size: 2.1rem;
+  line-height: 1;
 }
 
 .choices {
@@ -76,6 +80,16 @@ h1 {
 
 .choice:active {
   transform: scale(0.98);
+}
+
+.choice:disabled {
+  opacity: 0.7;
+}
+
+.choice:focus-visible,
+.retry:focus-visible {
+  outline: 3px solid #2e6ee8;
+  outline-offset: 2px;
 }
 
 .status {

@@ -1,4 +1,6 @@
 const TOTAL_QUESTIONS = 5;
+const MIN_COUNT = 1;
+const MAX_COUNT = 6;
 
 const state = {
   currentQuestion: 0,
@@ -25,22 +27,39 @@ function shuffle(list) {
 }
 
 function buildChoices(answer) {
-  const candidates = new Set([answer]);
+  const candidates = new Set([answer, answer - 1, answer + 1]);
 
-  while (candidates.size < 3) {
-    const delta = rand(-2, 2);
-    const next = Math.max(1, Math.min(10, answer + delta));
-    candidates.add(next);
+  for (let i = MIN_COUNT; candidates.size < 3 && i <= MAX_COUNT; i += 1) {
+    candidates.add(i);
   }
 
-  return shuffle([...candidates]);
+  const cleaned = [...candidates].filter(
+    (value) => value >= MIN_COUNT && value <= MAX_COUNT,
+  );
+
+  while (cleaned.length < 3) {
+    cleaned.push(answer);
+  }
+
+  return shuffle(cleaned.slice(0, 3));
+}
+
+function renderItems(count) {
+  itemArea.innerHTML = "";
+
+  for (let i = 0; i < count; i += 1) {
+    const star = document.createElement("span");
+    star.className = "item";
+    star.textContent = "⭐";
+    itemArea.appendChild(star);
+  }
 }
 
 function showQuestion() {
   state.locked = false;
-  state.answer = rand(1, 10);
+  state.answer = rand(MIN_COUNT, MAX_COUNT);
 
-  itemArea.textContent = "⭐".repeat(state.answer);
+  renderItems(state.answer);
   progress.textContent = `もんだい ${state.currentQuestion + 1} / ${TOTAL_QUESTIONS}`;
   feedback.textContent = "タップして こたえよう！";
   feedback.className = "feedback";
@@ -51,6 +70,7 @@ function showQuestion() {
     btn.className = "choice";
     btn.type = "button";
     btn.textContent = String(value);
+    btn.setAttribute("aria-label", `${value}`);
     btn.addEventListener("click", () => selectAnswer(value));
     choices.appendChild(btn);
   });
@@ -64,6 +84,9 @@ function selectAnswer(value) {
   if (value === state.answer) {
     state.locked = true;
     state.correctCount += 1;
+    choices.querySelectorAll("button").forEach((button) => {
+      button.disabled = true;
+    });
     feedback.textContent = "せいかい！ いいね！";
     feedback.className = "feedback good";
 
