@@ -1,0 +1,150 @@
+:root {
+  color-scheme: light;
+  --bg: #f5fbff;
+  --card: #ffffff;
+  --text: #203040;
+  --accent: #4f8cff;
+  --ok: #22a36a;
+  --soft: #e7f0ff;
+}
+
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: "Hiragino Kaku Gothic ProN", "Yu Gothic", sans-serif;
+  background: var(--bg);
+  color: var(--text);
+  min-height: 100vh;
+  display: grid;
+  place-items: center;
+}
+
+.game {
+  width: min(92vw, 480px);
+  text-align: center;
+}
+
+h1 {
+  margin-bottom: 0;
+}
+
+.subtitle {
+  margin-top: 0.3rem;
+  color: #4a5a70;
+}
+
+.card {
+  background: var(--card);
+  border-radius: 20px;
+  padding: 1.2rem;
+  box-shadow: 0 10px 30px rgba(35, 70, 120, 0.08);
+}
+
+.guide {
+  font-size: 1.15rem;
+  margin-top: 0;
+}
+
+.items {
+  min-height: 82px;
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 10px;
+  margin-bottom: 1rem;
+}
+
+.item {
+  font-size: 2.1rem;
+  line-height: 1;
+}
+
+.choices {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 10px;
+}
+
+.choice {
+  border: none;
+  border-radius: 12px;
+  background: var(--soft);
+  color: var(--text);
+  font-size: 1.5rem;
+  font-weight: bold;
+  min-height: 60px;
+}
+
+.choice:active {
+  transform: scale(0.98);
+}
+
+.choice:disabled {
+  opacity: 0.7;
+}
+
+.choice:focus-visible,
+.retry:focus-visible {
+  outline: 3px solid #2e6ee8;
+  outline-offset: 2px;
+}
+
+
+.cheer {
+  margin: 0 0 0.5rem;
+  color: #ff9d2f;
+  font-weight: 700;
+  animation: pop 0.5s ease-out;
+}
+
+@keyframes pop {
+  0% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+
+  40% {
+    transform: scale(1.06);
+    opacity: 1;
+  }
+
+  100% {
+    transform: scale(1);
+    opacity: 1;
+  }
+}
+
+.status {
+  margin-top: 1rem;
+}
+
+.feedback {
+  min-height: 2rem;
+  font-size: 1.1rem;
+  font-weight: 600;
+}
+
+.feedback.good {
+  color: var(--ok);
+}
+
+.progress {
+  color: #566b88;
+}
+
+.retry {
+  margin-top: 0.6rem;
+  border: none;
+  background: var(--accent);
+  color: white;
+  font-size: 1.1rem;
+  padding: 0.8rem 1.1rem;
+  border-radius: 14px;
+}
+
+.hidden {
+  display: none;
+}
